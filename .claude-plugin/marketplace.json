@@ -2,7 +2,7 @@
   "name": "llm-hardness-rules",
   "id": "llm-hardness-rules",
   "owner": {
-    "name": "AIMasterMinds"
+    "name": "dimasyankauskas"
   },
   "metadata": {
     "description": "Behavioral contracts that make AI coding agents deterministic. Enforcement gates, cross-session memory, non-coding coverage.",
@@ -15,7 +15,7 @@
       "description": "Hardness Protocol: Verify-Before-Claim, Critic-Refiner Loop, Failure Memory Anchors, Surgical Changes, Senior Engineer Test",
       "version": "1.0.0",
       "author": {
-        "name": "AIMasterMinds"
+        "name": "dimasyankauskas"
       },
       "keywords": [
         "guidelines",

@@ -2,7 +2,7 @@
 
 Behavioral contracts that force AI agents to finish what they start. Not guidelines. Enforcement.
 
-We'd been grinding on this problem for months before anyone else named it. Agents over-engineering single-line fixes into Strategy patterns. Making drive-by edits nobody asked for. Silently breaking features they'd shipped two hours earlier. We ran an [agent optimization lab](https://github.com/AIMasterMinds/Antigravity_Expert) for roughly 4 months — about 6 production projects, thousands of agent sessions — trying to figure out why LLM agents degrade under pressure and what structural fixes actually stick.
+We'd been grinding on this problem for months before anyone else named it. Agents over-engineering single-line fixes into Strategy patterns. Making drive-by edits nobody asked for. Silently breaking features they'd shipped two hours earlier. We ran an [agent optimization lab](https://github.com/dimasyankauskas/Antigravity_Expert) for roughly 4 months — about 6 production projects, thousands of agent sessions — trying to figure out why LLM agents degrade under pressure and what structural fixes actually stick.
 
 Then [Karpathy posted](https://x.com/karpathy/status/2015883857489522876) about the exact same failure modes. Same diagnosis, arrived at independently. He nailed the problems. We'd already built the treatment.
 
@@ -103,13 +103,13 @@ The coding gap is enforcement — both rule sets know the right behavior, but on
 Drop it in your project root:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/AIMasterMinds/llm-hardness-rules/main/CLAUDE.md -o CLAUDE.md
+curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/CLAUDE.md -o CLAUDE.md
 ```
 
 Or install as a plugin:
 
 ```bash
-claude plugin add AIMasterMinds/llm-hardness-rules
+claude plugin add dimasyankauskas/llm-hardness-rules
 ```
 
 ### Google Antigravity
@@ -117,14 +117,14 @@ claude plugin add AIMasterMinds/llm-hardness-rules
 Global install — covers every project you open:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/AIMasterMinds/llm-hardness-rules/main/GEMINI.md -o ~/.gemini/GEMINI.md
+curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/GEMINI.md -o ~/.gemini/GEMINI.md
 ```
 
 Or install as a skill:
 
 ```bash
 mkdir -p ~/.gemini/antigravity/skills/hardness-protocol
-curl -sL https://raw.githubusercontent.com/AIMasterMinds/llm-hardness-rules/main/skills/hardness-protocol/SKILL.md \
+curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/skills/hardness-protocol/SKILL.md \
   -o ~/.gemini/antigravity/skills/hardness-protocol/SKILL.md
 ```
 
@@ -132,7 +132,7 @@ curl -sL https://raw.githubusercontent.com/AIMasterMinds/llm-hardness-rules/main
 
 ```bash
 mkdir -p .cursor/rules
-curl -sL https://raw.githubusercontent.com/AIMasterMinds/llm-hardness-rules/main/.cursor/rules/hardness.mdc \
+curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/.cursor/rules/hardness.mdc \
   -o .cursor/rules/hardness.mdc
 ```
 
@@ -154,7 +154,7 @@ The base handles universal behavior. Your project file handles identity, tech st
 
 - **Andrej Karpathy** — [identified the core failure modes](https://x.com/karpathy/status/2015883857489522876): over-engineering, drive-by edits, hidden assumptions, agents that don't verify. The diagnosis was right. His tweet is what finally gave this problem a public name.
 - **forrestchang** — [packaged them](https://github.com/forrestchang/andrej-karpathy-skills) as a Claude Code plugin. Smart distribution.
-- **BuildFutures.ai** — Discovered the same failure modes independently through months of agent optimization in the [Antigravity Expert lab](https://github.com/AIMasterMinds/Antigravity_Expert). Added enforcement architecture (AP-21/22/23), non-coding task coverage, cross-session failure memory, and multi-platform support. He identified the disease. We built the treatment.
+- **BuildFutures.ai** — Discovered the same failure modes independently through months of agent optimization in the [Antigravity Expert lab](https://github.com/dimasyankauskas/Antigravity_Expert). Added enforcement architecture (AP-21/22/23), non-coding task coverage, cross-session failure memory, and multi-platform support. He identified the disease. We built the treatment.
 
 ## License
 

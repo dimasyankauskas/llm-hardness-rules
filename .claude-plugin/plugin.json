@@ -3,7 +3,7 @@
   "description": "Behavioral contracts that make AI coding agents deterministic — enforcement gates, cross-session memory, and non-coding task coverage",
   "version": "1.0.0",
   "author": {
-    "name": "AIMasterMinds"
+    "name": "dimasyankauskas"
   },
   "license": "MIT",
   "keywords": ["guidelines", "best-practices", "coding", "hardness", "verification", "determinism"],
