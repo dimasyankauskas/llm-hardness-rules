@@ -1,0 +1,31 @@
+{
+  "name": "llm-hardness-rules",
+  "id": "llm-hardness-rules",
+  "owner": {
+    "name": "AIMasterMinds"
+  },
+  "metadata": {
+    "description": "Behavioral contracts that make AI coding agents deterministic. Enforcement gates, cross-session memory, non-coding coverage.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "llm-hardness-rules",
+      "source": "./",
+      "description": "Hardness Protocol: Verify-Before-Claim, Critic-Refiner Loop, Failure Memory Anchors, Surgical Changes, Senior Engineer Test",
+      "version": "1.0.0",
+      "author": {
+        "name": "AIMasterMinds"
+      },
+      "keywords": [
+        "guidelines",
+        "best-practices",
+        "hardness",
+        "verification",
+        "determinism",
+        "anti-regression"
+      ],
+      "category": "workflow"
+    }
+  ]
+}
