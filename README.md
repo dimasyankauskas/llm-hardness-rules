@@ -76,17 +76,17 @@ Our agent produced a focused 400-word brief: problem, persona, solution, success
 
 Karpathy's agent responded from training data. Stale pricing, hallucinated team sizes, no citations. Our agent ran live web searches — the Determinism rule (§2) forces tool verification over generation — cited every source, and flagged two data points it couldn't independently confirm.
 
-### Results
+### What we observed
 
-| Scenario | Karpathy | Hardness |
+| Capability | Karpathy's Rules | Hardness Rules |
 |---|---|---|
-| Fix race condition | 3/5 | 5/5 |
-| Add dark mode | 3/5 | 5/5 |
-| Write product brief | 1/5 | 4/5 |
-| Research competitors | 1/5 | 5/5 |
-| **Average** | **2.0** | **4.75** |
+| Correct code fix | ✅ Yes | ✅ Yes |
+| Verified before claiming done | ❌ No | ✅ Yes |
+| Avoided drive-by edits | ❌ No | ✅ Yes |
+| Non-coding task quality | — Out of scope | ✅ Covered |
+| Cross-session memory | — Not addressed | ✅ AP-23 |
 
-The coding gap is enforcement — both rule sets describe the right behavior, only one forces it. The non-coding gap is existence.
+Karpathy's rules produce good coding behavior — the diagnosis was accurate and the guidance is sound. The gaps are verification enforcement and non-coding coverage, which is what these rules add.
 
 ## Installation
 
