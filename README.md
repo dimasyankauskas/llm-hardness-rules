@@ -35,7 +35,7 @@ One is advice. The other is a structural constraint. Advice degrades under press
 
 ## What's inside
 
-49 lines. Six sections. That's the whole thing.
+~50 lines. Five sections. That's the whole thing.
 
 | Section | What it does |
 |---|---|
@@ -44,7 +44,6 @@ One is advice. The other is a structural constraint. Advice degrades under press
 | **§3 Hardness Protocol** | Three non-negotiable verification gates |
 | **§4 Anti-Regression** | Stops new work from silently wiping old work |
 | **§5 Security** | Zero-trust, least privilege, no key leaks |
-| **§6 Operational** | Skill routing, memory hygiene, path safety |
 
 ### The three gates
 

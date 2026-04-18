@@ -1,10 +1,11 @@
 ---
 description: Hardness Protocol — behavioral contracts for deterministic AI agent execution
-globs:
 alwaysApply: true
 ---
 
 # Hardness Protocol
+
+**Tradeoff:** These rules bias toward correctness over speed. For trivial one-liners, use judgment.
 
 ## Engineering Philosophy
 - **Determinism over Generation:** If it can be verified by a script, tool, or structured check — verify it.
