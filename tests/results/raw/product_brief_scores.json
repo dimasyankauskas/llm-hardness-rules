@@ -1,0 +1,10 @@
+{
+  "control": {
+    "parse_error": true,
+    "raw": "[API ERROR 400]"
+  },
+  "treatment": {
+    "parse_error": true,
+    "raw": "[API ERROR 400]"
+  }
+}

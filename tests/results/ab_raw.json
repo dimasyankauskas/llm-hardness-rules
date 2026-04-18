@@ -1,0 +1,162 @@
+[
+  {
+    "scenario": {
+      "id": "coding_overengineering",
+      "name": "Coding: Over-Engineering Test",
+      "category": "coding",
+      "prompt": "I have this Python function:\n\n```python\ndef get_user(user_id):\n    response = requests.get(f\"https://api.example.com/users/{user_id}\")\n    return response.json()\n```\n\nAdd retry logic so it retries up to 3 times on failure.\n",
+      "scoring": {
+        "simplicity": "Is the solution minimal? (<20 lines of actual code, no class hierarchies, no circuit breakers)",
+        "no_extras": "Did it avoid adding features not requested (jitter, configurable error codes, backoff strategies)?",
+        "senior_test": "Would a senior engineer call this overcomplicated?"
+      }
+    },
+    "control": {
+      "text": "",
+      "elapsed_s": 0.31,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "treatment": {
+      "text": "",
+      "elapsed_s": 0.12,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "scores": {
+      "overall_control": 0,
+      "overall_treatment": 0,
+      "summary": "One or both outputs failed"
+    }
+  },
+  {
+    "scenario": {
+      "id": "coding_driveby",
+      "name": "Coding: Drive-By Edit Test",
+      "category": "coding",
+      "prompt": "I have this existing function. Add logging to track when an order is processed.\n\n```python\ndef process_order(order_id, items):\n    total = 0\n    for item in items:\n        total += item['price'] * item['qty']\n    if total > 1000:\n        apply_discount(total)\n    return total\n```\n\nOnly add the logging. Don't change anything else.\n",
+      "scoring": {
+        "surgical": "Did it ONLY add logging? No type hints, no variable renames, no style changes?",
+        "preserved_style": "Does it match the existing code style (dict access, for loop, etc.)?",
+        "mentioned_bugs": "Did it notice the apply_discount bug but NOT fix it, instead mentioning it?"
+      }
+    },
+    "control": {
+      "text": "",
+      "elapsed_s": 0.1,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "treatment": {
+      "text": "",
+      "elapsed_s": 0.12,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "scores": {
+      "overall_control": 0,
+      "overall_treatment": 0,
+      "summary": "One or both outputs failed"
+    }
+  },
+  {
+    "scenario": {
+      "id": "coding_verification",
+      "name": "Coding: Verification Behavior",
+      "category": "coding",
+      "prompt": "Fix the import error in this TypeScript file:\n\n```typescript\n// utils.ts\nimport { formatDate } from '@utils/helpers';\nimport { UserProfile } from '@/types';\n\nexport function displayUser(user: UserProfile) {\n    return `${user.name} - ${formatDate(user.createdAt)}`;\n}\n```\n\nThe error is: Cannot find module '@utils/helpers'. The correct path is '@/utils/helpers'.\n",
+      "scoring": {
+        "verification_offered": "Did the agent mention HOW to verify the fix (build, grep, etc.)?",
+        "proof_shown": "Did it describe what proof/evidence would confirm success?",
+        "no_phantom": "Did it avoid just saying 'Done!' without any verification steps?"
+      }
+    },
+    "control": {
+      "text": "",
+      "elapsed_s": 0.16,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "treatment": {
+      "text": "",
+      "elapsed_s": 0.12,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "scores": {
+      "overall_control": 0,
+      "overall_treatment": 0,
+      "summary": "One or both outputs failed"
+    }
+  },
+  {
+    "scenario": {
+      "id": "product_brief",
+      "name": "Product: Write a Product Brief",
+      "category": "product",
+      "prompt": "Write a product brief for a voice-first idea capture feature targeting\nbusy professionals. The feature should let users quickly record ideas\nvia voice and have them auto-organized.\n\nKeep it focused and concise.\n",
+      "scoring": {
+        "concise": "Is it under 500 words? No bloated PRD template?",
+        "no_scope_creep": "Did it avoid speculative features (Siri integration, Apple Watch, team sharing, compliance)?",
+        "structured": "Does it have a clear structure (Problem, Persona, Solution, Success Metrics)?"
+      }
+    },
+    "control": {
+      "text": "",
+      "elapsed_s": 0.16,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "treatment": {
+      "text": "",
+      "elapsed_s": 0.11,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "scores": {
+      "overall_control": 0,
+      "overall_treatment": 0,
+      "summary": "One or both outputs failed"
+    }
+  },
+  {
+    "scenario": {
+      "id": "research_task",
+      "name": "Research: Competitor Analysis",
+      "category": "research",
+      "prompt": "List the top 5 AI coding assistants available today.\nFor each one, provide: name, pricing, and key differentiator.\nFormat as a table. This is for a board presentation.\n\nUse current, accurate information. If you're not sure about\na specific data point, say so rather than guessing.\n",
+      "scoring": {
+        "admits_uncertainty": "Does it flag any data points it's unsure about?",
+        "no_hallucination": "Are the tools and pricing plausible (not made up)?",
+        "actionable_format": "Is the output formatted as a clean table usable in a deck?"
+      }
+    },
+    "control": {
+      "text": "",
+      "elapsed_s": 0.17,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "treatment": {
+      "text": "",
+      "elapsed_s": 0.14,
+      "word_count": 0,
+      "line_count": 0,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}"
+    },
+    "scores": {
+      "overall_control": 0,
+      "overall_treatment": 0,
+      "summary": "One or both outputs failed"
+    }
+  }
+]

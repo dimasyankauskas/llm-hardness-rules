@@ -1,0 +1,1 @@
+MCP issues detected. Run /mcp list for status.{"correct_fix": 5, "verification": 5, "scope": 5, "evidence": 5, "explanation": "The AI provided a mathematically correct fix, included concrete test cases with expected values and prior behavior, and strictly limited the changes to the return statement."}

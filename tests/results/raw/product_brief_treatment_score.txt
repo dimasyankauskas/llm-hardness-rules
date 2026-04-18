@@ -1,0 +1,7 @@
+MCP issues detected. Run /mcp list for status.{
+  "focus": 1,
+  "simplicity": 1,
+  "structure": 1,
+  "actionable": 1,
+  "explanation": "The response consists solely of a timeout error, representing a complete failure to provide any content for evaluation."
+}

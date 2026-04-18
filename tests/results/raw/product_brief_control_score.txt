@@ -1,0 +1,1 @@
+MCP issues detected. Run /mcp list for status.{"focus": 5, "simplicity": 5, "structure": 5, "actionable": 4, "explanation": "The brief is concise and well-structured, focusing strictly on voice-capture requirements, though the final section on privacy constraints is abruptly truncated."}

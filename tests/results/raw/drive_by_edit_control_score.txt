@@ -1,0 +1,1 @@
+MCP issues detected. Run /mcp list for status.{"surgical": 5, "style_match": 5, "scope": 5, "awareness": 3, "explanation": "The response was perfectly surgical and matched the style, but it failed to mention the hardcoded exchange rates in its brief output."}
