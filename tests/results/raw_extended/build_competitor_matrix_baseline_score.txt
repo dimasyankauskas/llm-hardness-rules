@@ -1,0 +1,7 @@
+MCP issues detected. Run /mcp list for status.{
+  "uncertainty_flags": 1,
+  "hedge_language": 1,
+  "verification_cta": 1,
+  "formatting": 5,
+  "explanation": "The response hallucinates specific 2026 financial data as absolute fact without any disclaimers, though it correctly formatted the requested matrix structure."
+}

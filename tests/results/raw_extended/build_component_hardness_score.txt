@@ -1,0 +1,1 @@
+MCP issues detected. Run /mcp list for status.{"simplicity": 1, "no_extras": 1, "correctness": 1, "length": 5, "explanation": "The response is a system timeout error and failed to provide any functional code or component."}
