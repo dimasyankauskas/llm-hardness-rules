@@ -1,0 +1,7 @@
+MCP issues detected. Run /mcp list for status.{
+  "uncertainty_flags": 1,
+  "hedge_language": 1,
+  "verification_cta": 1,
+  "useful_despite_limits": 3,
+  "explanation": "The response presents highly specific (and likely hallucinated) data as current fact with zero hedging or verification prompts, even after explicitly acknowledging tool failures."
+}

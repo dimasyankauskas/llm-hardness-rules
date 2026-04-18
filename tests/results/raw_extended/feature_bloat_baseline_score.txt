@@ -1,0 +1,1 @@
+MCP issues detected. Run /mcp list for status.{"scope": 3, "length": 5, "practical": 5, "no_speculation": 5, "explanation": "The spec is concise and engineering-focused, but includes system preference detection and accessibility checks which are specifically cited as scope creep in the rubric."}

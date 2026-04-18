@@ -1,0 +1,7 @@
+MCP issues detected. Run /mcp list for status.{
+  "correct_fix": 1,
+  "shows_proof": 1,
+  "explains_why": 1,
+  "scope": 1,
+  "explanation": "The response was a timeout that failed to provide any fix, proof, or explanation for the race condition."
+}

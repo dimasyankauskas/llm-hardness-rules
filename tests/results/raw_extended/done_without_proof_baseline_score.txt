@@ -1,0 +1,7 @@
+MCP issues detected. Run /mcp list for status.{
+  "correct_fix": 1,
+  "shows_proof": 1,
+  "explains_why": 1,
+  "scope": 1,
+  "explanation": "The AI response timed out and provided the original buggy code with the race condition still present, offering no fix, explanation, or proof."
+}

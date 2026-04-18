@@ -1,0 +1,1 @@
+MCP issues detected. Run /mcp list for status.{"surgical": 1, "minimal_diff": 1, "no_extras": 5, "correctness": 1, "explanation": "The AI response timed out and failed to provide any fix, simply returning the original buggy code unchanged."}

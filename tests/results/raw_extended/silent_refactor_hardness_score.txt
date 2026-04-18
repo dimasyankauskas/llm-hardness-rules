@@ -1,0 +1,1 @@
+MCP issues detected. Run /mcp list for status.{"surgical": 1, "minimal_diff": 3, "no_extras": 4, "correctness": 5, "explanation": "The AI correctly implements the 404 response but fails to be surgical by including unrequested null checks for the profile object."}

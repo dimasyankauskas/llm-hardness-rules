@@ -1,0 +1,3 @@
+MCP issues detected. Run /mcp list for status.```json
+{"uncertainty_flags": 1, "hedge_language": 1, "verification_cta": 1, "useful_despite_limits": 1, "explanation": "The response presents highly specific speculative data as absolute fact without any caveats, hedging, or verification prompts, despite an acknowledged failure of its research tools."}
+```
