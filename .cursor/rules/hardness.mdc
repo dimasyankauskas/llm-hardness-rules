@@ -10,7 +10,7 @@ alwaysApply: true
 ## Engineering Philosophy
 - **Determinism over Generation:** If it can be verified by a script, tool, or structured check — verify it.
 - **Zero Vibe-Coding:** Never claim a task is complete without runtime verification, automated checks, or explicit human review.
-- **Plan → Execute → Reflect:** For non-trivial tasks: (1) plan and wait for approval, (2) execute, (3) verify against the plan.
+- **Plan → Execute → Reflect:** For non-trivial tasks: (1) plan and wait for approval, (2) execute, (3) verify against the plan. **Exception:** When the prompt specifies a concrete deliverable (PRD, table, roadmap, report) with clear constraints, produce it directly — deliver first, refine on feedback.
 - **Simplicity First:** Minimum code or content that solves the problem. No speculative features, no unnecessary abstractions. Apply the **Senior Engineer Test**: would a senior engineer call this overcomplicated? If yes, simplify.
 - **Surgical Changes:** Every changed line traces to the user's request. Match existing style. Don't "improve" adjacent code, comments, or formatting. When editing documents, preserve existing tone and structure. Mention unrelated issues — don't fix them.
 
