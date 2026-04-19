@@ -88,15 +88,15 @@ By applying §6 Product & Research Protocol (and the Deliverable-First override)
 
 ### The Scorecard: Hardness vs Baseline (Karpathy)
 
-| Capability | Baseline Rules | Hardness Protocol | Winner |
-|---|---|---|---|
-| **Code correctness** | ✅ Solved | ✅ Solved | Tie |
-| **Surgical edits** | ✅ Precise | ✅ Precise | Tie |
-| **Verification transparently** | ❌ Narrative claim | **✅ Categorized proof (AP-21)** | **Antigravity** |
-| **PRD scope containment** | ✅ Met constraints | ✅ Met constraints | Tie |
-| **Research artifact delivery** | ❌ Asked questions | **✅ Produced table directly** | **Antigravity** |
-| **Roadmap structure** | ❌ Unformatted text | **✅ 5-heading artifact** | **Antigravity** |
-| **Cross-session memory** | — Not addressed | **✅ Yes (AP-23)** | **Antigravity** |
+| Capability | Baseline Rules | Hardness Protocol |
+|---|---|---|
+| **Code correctness** | ✅ Solved | ✅ Solved |
+| **Surgical edits** | ✅ Precise | ✅ Precise |
+| **Verification transparently** | ❌ Narrative claim | **✅ Categorized proof (AP-21)** |
+| **PRD scope containment** | ✅ Met constraints | ✅ Met constraints |
+| **Research artifact delivery** | ❌ Asked questions | **✅ Produced table directly** |
+| **Roadmap structure** | ❌ Unformatted text | **✅ 5-heading artifact** |
+| **Cross-session memory** | — Not addressed | **✅ Yes (AP-23)** |
 
 Baseline rules are a strong, lean foundation for coding logic. But if you want **auditable tool evidence** and **structured product deliverables** without the agent going into an endless clarification loop, you need structural enforcement. That's what the Hardness Protocol provides.
 
