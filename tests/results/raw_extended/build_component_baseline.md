@@ -1,1 +1,1 @@
-[TIMEOUT]
+Created `Button.tsx` with a minimal component: `onClick` handler and `children` for text content.

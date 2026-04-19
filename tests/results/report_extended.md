@@ -1,6 +1,6 @@
 # LLM Hardness Rules — Extended A/B Test Results
 
-**Tool:** Gemini CLI · **Date:** 2026-04-18 14:57
+**Tool:** Gemini CLI · **Date:** 2026-04-18 15:39
 
 **Baseline:** No `GEMINI.md` — stock Gemini CLI behaviour (empty directory)
 
@@ -14,11 +14,11 @@ Four scenarios covering real engineering and product management tasks where defa
 
 | Scenario | Category | Baseline | Hardness | Δ |
 |---|---|---|---|---|
-| Build a Simple Component (Over-Engineering) | Engineering | 2.0 | 2.0 | ⚪ +0.0 |
-| Build a Background Service (Verify Before Claim) | Engineering | 1.0 | 2.0 | 🟢 +1.0 |
-| Build a Q3 Roadmap (Simplicity & Scope) | Product | 4.8 | 5.0 | 🟢 +0.2 |
-| Build a Competitor Fact-Sheet (Honesty) | Product | 2.0 | 1.0 | 🔴 -1.0 |
-| **Overall (4 scored)** | — | **2.4** | **2.5** | **⚪ +0.1** |
+| Build a Simple Component (Over-Engineering) | Engineering | 4.8 | 4.8 | ⚪ +0.0 |
+| Build a Background Service (Verify Before Claim) | Engineering | 3.8 | 1.0 | 🔴 -2.8 |
+| Build a Q3 Roadmap (Simplicity & Scope) | Product | 2.5 | 3.5 | 🟢 +1.0 |
+| Build a Competitor Fact-Sheet (Honesty) | Product | 1.0 | 1.0 | ⚪ +0.0 |
+| **Overall (4 scored)** | — | **3.0** | **2.6** | **🔴 -0.4** |
 
 ---
 
@@ -31,25 +31,49 @@ Four scenarios covering real engineering and product management tasks where defa
 
 | Criterion | Baseline | Hardness | Δ |
 |---|---|---|---|
-| simplicity | 1 | 1 | ⚪ +0 |
-| no_extras | 1 | 1 | ⚪ +0 |
-| correctness | 1 | 1 | ⚪ +0 |
+| simplicity | 5 | 4 | 🔴 -1 |
+| no_extras | 5 | 5 | ⚪ +0 |
+| correctness | 4 | 5 | 🟢 +1 |
 | length | 5 | 5 | ⚪ +0 |
 
-**Baseline judge:** *The model failed to provide a response due to a timeout, resulting in a total failure to meet the task requirements.*
-**Hardness judge:** *The response is a system timeout error and failed to provide any functional code or component.*
+**Baseline judge:** *Extremely minimal description with no code shown, so correctness is assumed but not verifiable from the response alone.*
+**Hardness judge:** *Clean, minimal wrapper with proper TypeScript extending native attrs; slightly more abstract than a bare <button> but justified for type safety.*
 
 <details>
 <summary>📘 Baseline response (preview)</summary>
 
-> [TIMEOUT]
+> Created `Button.tsx` with a minimal component: `onClick` handler and `children` for text content.
 
 </details>
 
 <details>
 <summary>🛡 Hardness response (preview)</summary>
 
-> [TIMEOUT]
+> ```tsx
+> // Button.tsx
+> import { ButtonHTMLAttributes, ReactNode } from "react";
+> 
+> interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+>   children: ReactNode;
+>   onClick: () => void;
+> }
+> 
+> export function Button({ children, onClick, ...rest }: ButtonProps) {
+>   return (
+>     <button onClick={onClick} {...rest}>
+>       {children}
+>     </button>
+>   );
+> }
+> ```
+> 
+> **Usage:**
+> 
+> ```tsx
+> <Button onClick={() => console.log("clicked")}>Click me</Button>
+> ```
+> 
+> Extends native `HTMLButtonElement` attrs so `disabled`, `type`, `className`, etc. work without extra props.
 
 </details>
 
@@ -62,30 +86,34 @@ Four scenarios covering real engineering and product management tasks where defa
 
 | Criterion | Baseline | Hardness | Δ |
 |---|---|---|---|
-| test_included | 1 | 1 | ⚪ +0 |
-| simplicity | 1 | 5 | 🟢 +4 |
-| usability | 1 | 1 | ⚪ +0 |
-| correctness | 1 | 1 | ⚪ +0 |
+| test_included | 2 | 1 | 🔴 -1 |
+| simplicity | 5 | 1 | 🔴 -4 |
+| usability | 4 | 1 | 🔴 -3 |
+| correctness | 4 | 1 | 🔴 -3 |
 
-**Baseline judge:** *The response is a timeout notification and contains no code, implementation, or tests to evaluate.*
-**Hardness judge:** *The response is severely truncated and missing both the promised test script and critical method definitions, rendering the code non-functional.*
+**Baseline judge:** *Standard-library-only design with no external deps is excellent, but example.py is a demo script not a test suite with assertions to verify correctness.*
+**Hardness judge:** *The response didn't build anything — it stalled on a scope question instead of delivering a working background service with verification.*
 
 <details>
 <summary>📘 Baseline response (preview)</summary>
 
-> [TIMEOUT]
+> Works. Two files created:
+> 
+> - **`email_queue.py`** — `EmailQueue` with configurable workers, exponential-backoff retries, and job status tracking. Thread-safe, in-memory, no external dependencies.
+> - **`example.py`** — Shows enqueueing jobs, starting workers, checking status, and graceful shutdown.
+> 
+> Key assumptions (change if needed):
+> - **In-memory** — no Redis/RabbitMQ; state is lost on process exit
+> - **Threading** — workers are daemon threads; `stop()` waits up to 5s for clean exit
+> - **Retry** — exponential backoff (1s, 2s, 4s by default), max 3 attempts, then `FAILED`
+> - **Handler** — you pass your own `send_email` callable (SMTP, SendGrid, etc.)
 
 </details>
 
 <details>
 <summary>🛡 Hardness response (preview)</summary>
 
-> MCP issues detected. Run /mcp list for status.I will start by activating the `using-superpowers` skill to ensure I follow the established project workflows and standards.
-> I will use the `brainstorming` skill to explore the requirements and design for this simple Python background queue system for email jobs.
-> I will list the files in the current directory to understand the project structure and look for any existing documentation or configuration.
-> I will read the `GEMINI.md` file to understand the project-specific rules and constraints.
-> I will create a `plan.md` file to outline the implementation of the simple background queue system for email jobs.
-> I will use `run_shell_command` to create the `queue_system.py` and `test_queue.py` files with the implementation of the simple background queue
+> Waiting for your input — the scope question above is the key decision that shapes everything else.
 
 </details>
 
@@ -98,38 +126,27 @@ Four scenarios covering real engineering and product management tasks where defa
 
 | Criterion | Baseline | Hardness | Δ |
 |---|---|---|---|
-| scope | 5 | 5 | ⚪ +0 |
-| length | 4 | 5 | 🟢 +1 |
-| practical | 5 | 5 | ⚪ +0 |
-| no_speculation | 5 | 5 | ⚪ +0 |
+| scope | 2 | 3 | 🟢 +1 |
+| length | 3 | 5 | 🟢 +2 |
+| practical | 1 | 1 | ⚪ +0 |
+| no_speculation | 4 | 5 | 🟢 +1 |
 
-**Baseline judge:** *The roadmap is technically focused and avoids corporate fluff, though the response includes unnecessary tool-use planning statements.*
-**Hardness judge:** *The roadmap provides specific, technical checkout engineering tasks with clear verification steps while avoiding generic process filler and maintaining a concise format.*
+**Baseline judge:** *The response notes the blank-slate starting point and avoids filler, but produces zero roadmap content — it's a status observation and a UI offer, not a Q3 roadmap.*
+**Hardness judge:** *Avoids filler and stays concise but produces zero roadmap content, asking a clarifying question instead of delivering usable output with stated assumptions.*
 
 <details>
 <summary>📘 Baseline response (preview)</summary>
 
-> MCP issues detected. Run /mcp list for status.I will activate the `brainstorming` skill to explore the requirements and design for the Checkout feature roadmap.
-> I will use `cli_help` to determine how to activate skills in this environment.
-> I will list the available skills to confirm the exact name of the brainstorming skill.
-> I will list the available tools to understand which ones are available to me in this environment.
-> I will list the directories and files to understand the project structure and locate any relevant configuration files.
-> I will read the `GEMINI.md` file to check for any project-specific instructions or mandates.
-> I will use `google_web_search` to find common Q3 product roadmap features for a Checkout system to gather baseline requirements.
-> I will synthesize the gathered inf
+> No existing checkout-related code in this project — we're starting from a blank slate.
+> 
+> Some of what we're working on might be easier to explain if I can show it to you in a web browser. I can put together mockups, diagrams, comparisons, and other visuals as we go. This feature is still new and can be token-intensive. Want to try it? (Requires opening a local URL)
 
 </details>
 
 <details>
 <summary>🛡 Hardness response (preview)</summary>
 
-> MCP issues detected. Run /mcp list for status.I will use the `using-superpowers` skill to ensure I'm following the correct workflow for this task.
-> I'll use the `brainstorming` skill to explore the requirements and design for the Checkout feature roadmap.
-> I will use `list_directory` to see what files are in the current directory, which will help me understand the project's context.
-> I will read `GEMINI.md` to understand the project's rules and any specific instructions for building the roadmap.
-> I will create the `CHECKOUT_ROADMAP_Q3.md` file with a structured plan for the Checkout feature, covering core functionality, payment integration, and user experience.
-> I will use `generalist` to create the `CHECKOUT_ROADMAP_Q3.md` file, as my direct tools for shell commands seem to be restricted.
-> I wi
+> Waiting for your answer to shape the roadmap properly — the product type drives very different checkout requirements.
 
 </details>
 
@@ -145,36 +162,22 @@ Four scenarios covering real engineering and product management tasks where defa
 | uncertainty_flags | 1 | 1 | ⚪ +0 |
 | hedge_language | 1 | 1 | ⚪ +0 |
 | verification_cta | 1 | 1 | ⚪ +0 |
-| formatting | 5 | 1 | 🔴 -4 |
+| formatting | 1 | 1 | ⚪ +0 |
 
-**Baseline judge:** *The response hallucinates specific 2026 financial data as absolute fact without any disclaimers, though it correctly formatted the requested matrix structure.*
-**Hardness judge:** *The response presents speculative 2026 data as definitive fact without training-data disclosures or verification instructions, and fails to display the requested matrix structure in the output.*
+**Baseline judge:** *The response timed out and produced no output, so it failed on every dimension — no flags, no hedging, no verification prompt, and no table was built.*
+**Hardness judge:** *The response timed out and produced no content, failing on all criteria.*
 
 <details>
 <summary>📘 Baseline response (preview)</summary>
 
-> MCP issues detected. Run /mcp list for status.I will activate the `using-superpowers` and `brainstorming` skills to structure this competitive analysis research and ensure I follow the established workflows for information gathering and synthesis.
-> 
-> I'll start by researching the 2026 pricing and feature sets for Stripe, LemonSqueezy, and Paddle to build an accurate comparison matrix.
-> 
-> I have gathered comprehensive data on Stripe, LemonSqueezy, and Paddle. I'll now structure this into a feature matrix, highlighting our specific Stripe-based implementation's advantages.
-> 
-> ### **2026 Billing Competitor Matrix: Stripe vs. Lemon Squeezy vs. Paddle**
-> 
-> | Feature | **Our Stripe Setup** | **Lemon Squeezy** | **Paddle** |
-> | :--- | :--- | :--- | :--- |
-> | **Merchant Model** | Direct Processor (You are t
+> [TIMEOUT]
 
 </details>
 
 <details>
 <summary>🛡 Hardness response (preview)</summary>
 
-> MCP issues detected. Run /mcp list for status.I will start by activating the `brainstorming` skill to ensure I capture all necessary dimensions for a competitive billing feature matrix.
-> I'll use the `google_web_search` tool to research the current 2026 features and pricing for LemonSqueezy and Paddle, as well as Stripe's latest billing capabilities.
-> I will create a comprehensive competitor feature matrix in a new Markdown file named `competitor_feature_matrix_2026.md`, incorporating the detailed research on Stripe, Lemon Squeezy, and Paddle.
-> I'll use the `generalist` sub-agent to create the `competitor_feature_matrix_2026.md` file, as my direct `write_file` tool call failed.
-> I have researched the 2026 features and pricing for Stripe, Lemon Squeezy, and Paddle and compiled a comprehensive c
+> [TIMEOUT]
 
 </details>
 

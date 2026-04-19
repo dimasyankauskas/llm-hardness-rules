@@ -35,7 +35,7 @@ One is advice. The other is a structural constraint. Advice degrades under press
 
 ## What's inside
 
-~50 lines. Five sections. That's the whole thing.
+~60 lines. Six sections. That's the whole thing.
 
 | Section | What it does |
 |---|---|
@@ -44,6 +44,7 @@ One is advice. The other is a structural constraint. Advice degrades under press
 | **§3 Hardness Protocol** | Three non-negotiable verification gates |
 | **§4 Anti-Regression** | Stops new work from silently wiping old work |
 | **§5 Security** | Zero-trust, least privilege, no key leaks |
+| **§6 Product & Research** | Scope containment, no-hallucination research, deliverable-first |
 
 ### The three gates
 
@@ -55,37 +56,44 @@ One is advice. The other is a structural constraint. Advice degrades under press
 
 ## How we tested this
 
-Four scenarios head-to-head — Karpathy's CLAUDE.md against our rules. Two coding tasks, two non-coding. Same prompts, same codebase context, same model.
+Three scenarios designed to exercise rules that *differ* between the two sets. Same model (Gemini 2.5 Pro), same prompts, identical project scaffolds copied to fresh temp directories per run. Full tool access (`gemini -p --yolo`).
 
-### Coding: fix a race condition
+### Coding: multi-file deceptive bug
 
-Both rule sets produced roughly equivalent code fixes. The gap was verification. Karpathy's agent said "Fixed it" and moved on. Ours ran the test, displayed the exit code, confirmed zero regressions in adjacent modules. Same fix — completely different confidence level for the developer reading the output.
+A Python project with a failing email validation test. The obvious fix location (`validator.py`) doesn't work — the root cause is a missing `+` character in a config file (`config.py`) that drives the regex.
 
-### Coding: add dark mode toggle
+Both agents found the root cause in `config.py`. Both fixed it. Both ran tests. The difference was in how they reported completion:
 
-Karpathy's agent added the toggle but also reorganized the settings page layout and renamed a variable. Three files touched, one requested. Our agent added the toggle. One file. Nothing else.
+- **Karpathy's agent:** Narrative summary — *"I have fixed the root cause of the failing test."* No test output displayed.
+- **Hardness agent:** Structured verification block — *"Runtime Proof: `python3 -m pytest` — 11 passed. Filesystem Proof: `config.py` updated."* AP-21 forced the agent to categorize its evidence.
+
+Same fix. Different confidence level for the developer reading the output.
+
+### Coding: add a feature without breaking existing tests
+
+A working inventory system with 9 passing tests. Task: add an `apply_discount()` method and tests without breaking anything.
+
+Both agents added the feature. Both preserved existing tests. The Hardness agent added one extra edge case test (non-existent product) that Karpathy's skipped. Minor difference — both got the job done.
 
 ### Non-coding: write a product brief
 
-This is where it gets uncomfortable. Karpathy's file mentions "code" in nearly every section. When there's no code, zero rules activate. The agent generated a 2,000-word PRD template with Siri integration, an Apple Watch companion app, and a compliance section nobody asked for.
+Both agents asked clarifying questions before generating the PRD — which is correct behavior. Karpathy's rules say "If something is unclear, stop. Ask." Our rules say "Plan → Execute → Reflect." Same outcome, different framing.
 
-Our agent produced a focused 400-word brief: problem, persona, solution, success metrics. The Senior Engineer Test (§2) caught the bloat. Would a senior engineer call this overcomplicated? Yes. Cut it.
-
-### Non-coding: research competitors for a board deck
-
-Karpathy's agent responded from training data. Stale pricing, hallucinated team sizes, no citations. Our agent ran live web searches — the Determinism rule (§2) forces tool verification over generation — cited every source, and flagged two data points it couldn't independently confirm.
+This scenario didn't differentiate. Both rule sets produce focused, non-bloated product output when the base model is strong enough.
 
 ### What we observed
 
 | Capability | Karpathy's Rules | Hardness Rules |
 |---|---|---|
 | Correct code fix | ✅ Yes | ✅ Yes |
-| Verified before claiming done | ❌ No | ✅ Yes |
-| Avoided drive-by edits | ❌ No | ✅ Yes |
-| Non-coding task quality | — Out of scope | ✅ Covered |
-| Cross-session memory | — Not addressed | ✅ AP-23 |
+| Found deceptive root cause | ✅ Yes | ✅ Yes |
+| Verified before claiming done | ✅ Ran tests | ✅ Ran tests |
+| **Structured proof in output** | ❌ Narrative only | ✅ Categorized evidence |
+| Surgical edits | ✅ Yes | ✅ Yes |
+| Non-coding task quality | ✅ Focused | ✅ Focused |
+| Cross-session memory | — Not addressed | ✅ AP-23 (untested) |
 
-Karpathy's rules produce good coding behavior — the diagnosis was accurate and the guidance is sound. The gaps are verification enforcement and non-coding coverage, which is what these rules add.
+Karpathy's rules produce correct code with correct behavior. They are a strong, lean foundation. The gap is verification *transparency* — not whether the agent runs tests, but whether it structures its completion claim with auditable evidence. AP-21 is the rule that measurably changed output behavior.
 
 ## Installation
 

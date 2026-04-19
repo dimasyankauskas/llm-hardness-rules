@@ -1,1 +1,3 @@
-MCP issues detected. Run /mcp list for status.{"uncertainty_flags": 1, "hedge_language": 1, "verification_cta": 1, "formatting": 1, "explanation": "The response presents speculative 2026 data as definitive fact without training-data disclosures or verification instructions, and fails to display the requested matrix structure in the output."}
+```json
+{"uncertainty_flags": 1, "hedge_language": 1, "verification_cta": 1, "formatting": 1, "explanation": "The response timed out and produced no content, failing on all criteria."}
+```

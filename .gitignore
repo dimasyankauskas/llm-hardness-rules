@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Temp files
+fix_json.py
+.remember/
+
+# OS
+.DS_Store

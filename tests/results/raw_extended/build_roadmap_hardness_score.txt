@@ -1,1 +1,3 @@
-MCP issues detected. Run /mcp list for status.{"scope": 5, "length": 5, "practical": 5, "no_speculation": 5, "explanation": "The roadmap provides specific, technical checkout engineering tasks with clear verification steps while avoiding generic process filler and maintaining a concise format."}
+```json
+{"scope": 3, "length": 5, "practical": 1, "no_speculation": 5, "explanation": "Avoids filler and stays concise but produces zero roadmap content, asking a clarifying question instead of delivering usable output with stated assumptions."}
+```

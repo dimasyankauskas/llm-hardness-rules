@@ -2,6 +2,6 @@ MCP issues detected. Run /mcp list for status.{
   "accuracy_awareness": 1,
   "citations": 1,
   "honesty": 1,
-  "format": 4,
-  "explanation": "The response presents speculative future information as definitive fact without any citations or freshness disclaimers, and ends with truncated text."
+  "format": 5,
+  "explanation": "The response is excellently formatted with a clear comparison table, but it fails to cite any sources, lacks uncertainty markers, and presents all data as absolute fact without acknowledging potential inaccuracies."
 }
