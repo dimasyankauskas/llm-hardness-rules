@@ -1,37 +1,37 @@
-# LLM Hardness Rules
+# LLM Hardness Protocol v5
 
 Behavioral contracts that force AI agents to finish what they start. Not guidelines. Enforcement.
 
-We'd been grinding on this for months inside an [agent optimization lab](https://github.com/dimasyankauskas/Antigravity_Expert) — roughly 6 production projects, thousands of agent sessions — trying to figure out why LLM agents degrade under pressure and what structural fixes actually hold. Then [Karpathy posted](https://x.com/karpathy/status/2015883857489522876) about the exact same failure modes. Same diagnosis, arrived at independently. He identified the problems. We'd already been building the fix.
+We built these rules because polite suggestions fail in production. We burned thousands of tokens watching agents drift halfway through complex edits, quietly forget requirements, and generate bloated text blobs instead of structured deliverables. Then [Karpathy posted](https://x.com/karpathy/status/2015883857489522876) about the exact same failure modes. Same diagnosis. We'd already been building the fix.
 
 > Works with **Claude Code** · **Google Antigravity** · **Cursor** · any LLM IDE that reads system prompts
 
-## The problem
+## The Reality of AI Coding Assistants
 
-Every AI coding assistant makes the same five mistakes. Over and over.
+Every AI coding assistant fails on the same five edge cases. Over and over.
 
-| What happens | What you wanted |
+| What happens | What you actually need |
 |---|---|
 | Builds a Strategy pattern for a one-liner | Just the one-liner |
-| Changes your quote style while fixing a bug | Only the bug fix |
-| Says "Done! I added the import." Never verified. | Proof it compiled |
-| Hallucinates the same deprecated API every session | Memory. Any memory at all. |
-| Goes silent when you ask for a product brief | Same rigor, any task |
+| Formats adjacent code while fixing a bug | Only the bug fix |
+| Claims "I added the import" with zero proof | Verified compiler output |
+| Hallucinates the same deprecated API every run | Cross-session memory |
+| Generates an unstructured brainstorm | A structured product deliverable |
 
-Karpathy's guidelines handle the first two well. But rows 3 through 5? Nothing fires. These rules cover all five.
+Karpathy's baseline guidelines handle the first two. Rows 3 through 5 are where agentic systems fall apart without structural limits. The Hardness Protocol covers all five.
 
-## Why contracts beat suggestions
+## Why Contracts Beat Suggestions
 
 Here's the difference in one example:
 
 ```
-Karpathy:  "Define success criteria. Loop until verified."
+Baseline:  "Define success criteria. Loop until verified."
 Hardness:  "You are FORBIDDEN from claiming done until you provide
             Runtime Proof, Filesystem Proof, Diff Proof, or Content Proof.
             Verbal assertions without tool evidence are a Tier 1 defect."
 ```
 
-One is advice. The other is a structural constraint. Advice degrades under pressure — long sessions, complex multi-file edits, the agent quietly drops good habits first. We've watched it happen across hundreds of sessions. Constraints don't degrade because they aren't optional. The agent can't mark the task complete without showing receipts.
+One is advice. The other is a structural constraint. Advice degrades under pressure. Make a 10-file refactor request, and the agent drops its good habits by file four. We watched it happen across hundreds of sessions. Constraints don't degrade. The agent can't mark the task complete without showing receipts. That's the whole ballgame.
 
 ## What's inside
 
@@ -54,37 +54,37 @@ One is advice. The other is a structural constraint. Advice degrades under press
 
 **AP-23 — Failure Memory.** When a pattern fails twice in the same session, the agent writes it to persistent storage. Next session reads it. The mistake doesn't repeat. Before AP-23, we'd watch the same deprecated API call resurface every Monday morning. That stopped.
 
-## How we tested this
+## Empirical Validation
 
-Three scenarios designed to exercise rules that *differ* between the two sets. Same model (Gemini 2.5 Pro), same prompts, identical project scaffolds copied to fresh temp directories per run. Full tool access (`gemini -p --yolo`).
+We ran three scenarios designed to exercise rules that differ between the two sets. Same model (Gemini 2.5 Pro), same prompts, identical project scaffolds copied to fresh temp directories per run. Full tool access (`gemini -p --yolo`).
 
-### Coding: multi-file deceptive bug
+### Scenario 1: The Multi-File Deceptive Bug
 
-A Python project with a failing email validation test. The obvious fix location (`validator.py`) doesn't work — the root cause is a missing `+` character in a config file (`config.py`) that drives the regex.
+A Python project with a failing email validation test. The obvious fix location (`validator.py`) doesn't work — the root cause is a missing `+` character in a config file (`config.py`).
 
-Both agents found the root cause in `config.py`. Both fixed it. Both ran tests. The difference was in how they reported completion:
+Both agents found the root cause. Both ran the test. *The difference was transparency.*
 
-- **Karpathy's agent:** Narrative summary — *"I have fixed the root cause of the failing test."* No test output displayed.
-- **Hardness agent:** Structured verification block — *"Runtime Proof: `python3 -m pytest` — 11 passed. Filesystem Proof: `config.py` updated."* AP-21 forced the agent to categorize its evidence.
+- **Baseline agent:** Narrative summary — *"I fixed the root cause of the failing test."* No output displayed.
+- **Hardness agent:** Structured verification block — *"Runtime Proof: `python3 -m pytest` — 11 passed. Filesystem Proof: `config.py` updated."* 
 
-Same fix. Different confidence level for the developer reading the output.
+Same fix. Different confidence level for the developer reading the output. AP-21 forces the agent to categorize its evidence.
 
-### Coding: add a feature without breaking existing tests
+### Scenario 2: Zero-Regression Feature Addition
 
 A working inventory system with 9 passing tests. Task: add an `apply_discount()` method and tests without breaking anything.
 
-Both agents added the feature. Both preserved existing tests. The Hardness agent added one extra edge case test (non-existent product) that Karpathy's skipped. Minor difference — both got the job done.
+Both agents added the feature. Both preserved existing tests. The Hardness agent added one extra edge case test (non-existent product) that the baseline skipped. Minor difference — both shipped verifiable code.
 
-### Non-coding: Product artifacts and research
+### Scenario 3: Product Deliverable Scoping
 
 We ran three product-focused scenarios: writing a scoped PRD, building a competitor pricing matrix, and generating an engineering roadmap. This exposed a massive gap between baseline advice and structural rules.
 
-Under standard advice, LLMs naturally drift into "brainstorming mode" on non-coding tasks. They produce unformatted blobs of text, make up numbers, and ignore word counts. 
+Under standard advice, LLMs naturally drift into "brainstorming mode" on non-coding tasks. They produce unformatted blobs of text, hallucinate numbers, and ignore constraints. 
 
-By applying §6 Product & Research Protocol (and the Deliverable-First override), the Hardness agent was forced to act like a PM:
+By applying §6 Product & Research Protocol (and the Deliverable-First override), the Hardness agent acted like a PM:
 - **Scope Containment:** Delivered a 238-word PRD instead of an endless feature dump.
-- **Deliverable-First:** Built a fully formatted 5-heading roadmap with timelines and owners, whereas the baseline agent failed to produce a structured artifact at all (delivering a 56-word unformatted snippet).
-- **No-Hallucination Research:** Successfully populated fact-based comparison matrices without hallucinating missing data.
+- **Deliverable-First:** Built a fully formatted 5-heading roadmap with timelines and owners. The baseline agent failed completely, outputting a 56-word unformatted snippet.
+- **No-Hallucination Research:** Successfully populated fact-based comparison matrices without making up missing data.
 
 ### The Scorecard: Hardness vs Baseline (Karpathy)
 
