@@ -1,164 +1,146 @@
-# LLM Hardness Protocol v5
+# LLM Hardness Rules
 
-Behavioral contracts that force AI agents to finish what they start. Not guidelines. Enforcement.
+Portable foundation rules for AI coding agents.
 
-We built these rules because polite suggestions fail in production. We burned thousands of tokens watching agents drift halfway through complex edits, quietly forget requirements, and generate bloated text blobs instead of structured deliverables. Then [Karpathy posted](https://x.com/karpathy/status/2015883857489522876) about the exact same failure modes. Same diagnosis. We'd already been building the fix.
+This project is intentionally small at the core: simple defaults, proof before completion, and optional stricter profiles when the task really needs them.
 
-> Works with **Claude Code** · **Google Antigravity** · **Cursor** · any LLM IDE that reads system prompts
+> Built first for **Codex**. Other prompt surfaces remain as compatibility outputs, not equal validation targets.
 
-## The Reality of AI Coding Assistants
+**Author note:** Codex is my primary agent. OpenAI's vision aligns strongly with my own, so this project is built for Codex first.
 
-Every AI coding assistant fails on the same five edge cases. Over and over.
+## Why This Exists
+
+Most agent failures come from a short list of behaviors:
 
 | What happens | What you actually need |
 |---|---|
-| Builds a Strategy pattern for a one-liner | Just the one-liner |
-| Formats adjacent code while fixing a bug | Only the bug fix |
-| Claims "I added the import" with zero proof | Verified compiler output |
-| Hallucinates the same deprecated API every run | Cross-session memory |
-| Generates an unstructured brainstorm | A structured product deliverable |
+| Builds a framework for a one-line task | Just the one-line task |
+| “Fixes” code while also refactoring nearby code | Only the requested edit |
+| Claims completion without proof | Evidence you can inspect |
+| Repeats the same bad approach | Failure memory |
+| Turns a concrete deliverable into a brainstorm | The requested artifact |
 
-Karpathy's baseline guidelines handle the first two. Rows 3 through 5 are where agentic systems fall apart without structural limits. The Hardness Protocol covers all five.
+The core protocol is meant to fix those behaviors without turning your prompt file into a workflow constitution.
 
-## Why Contracts Beat Suggestions
+## Core Protocol
 
-Here's the difference in one example:
+The shared core keeps only the rules that travel well across tools:
 
+- **Simplicity First**
+- **Surgical Changes**
+- **Deliverable-First**
+- **AP-21 Verify-Before-Claim**
+- **AP-22 Critic-Refiner Loop**
+- **AP-23 Failure Memory**
+- security constraints
+- an explicit “use judgment for trivial tasks” escape hatch
+
+The canonical source lives in [`protocols/core.md`](./protocols/core.md). Public prompt surfaces are rendered from it with:
+
+```bash
+python3 scripts/render_surfaces.py
 ```
-Baseline:  "Define success criteria. Loop until verified."
-Hardness:  "You are FORBIDDEN from claiming done until you provide
-            Runtime Proof, Filesystem Proof, Diff Proof, or Content Proof.
-            Verbal assertions without tool evidence are a Tier 1 defect."
-```
 
-One is advice. The other is a structural constraint. Advice degrades under pressure. Make a 10-file refactor request, and the agent drops its good habits by file four. We watched it happen across hundreds of sessions. Constraints don't degrade. The agent can't mark the task complete without showing receipts. That's the whole ballgame.
+## Optional Profiles
 
-## What's inside
+The strict workflows live in opt-in profiles instead of the universal base:
 
-~60 lines. Six sections. That's the whole thing.
-
-| Section | What it does |
+| Profile | Use when |
 |---|---|
-| **§1 Identity** | Sets tone — technical for code, precise for writing |
-| **§2 Philosophy** | Simplicity First, Surgical Changes, the Senior Engineer Test |
-| **§3 Hardness Protocol** | Three non-negotiable verification gates |
-| **§4 Anti-Regression** | Stops new work from silently wiping old work |
-| **§5 Security** | Zero-trust, least privilege, no key leaks |
-| **§6 Product & Research** | Scope containment, no-hallucination research, deliverable-first |
+| [`profiles/bugfix.md`](./profiles/bugfix.md) | real bug investigation, flaky tests, regressions |
+| [`profiles/research.md`](./profiles/research.md) | PRDs, competitor analysis, roadmaps, freshness-sensitive facts |
+| [`profiles/high-assurance.md`](./profiles/high-assurance.md) | shared interfaces, high regression risk, broad edits |
 
-### The three gates
-
-**AP-21 — Verify-Before-Claim.** The agent can't say "done" without tool-verified evidence. Build output, file content check, search results — something you can see. "I added the import" without proof isn't a style issue. It's a defect.
-
-**AP-22 — Critic-Refiner Loop.** When something breaks, the agent self-corrects up to three times before escalating. Each attempt targets a different root cause. No more "the build failed, what should I do?" on the first error.
-
-**AP-23 — Failure Memory.** When a pattern fails twice in the same session, the agent writes it to persistent storage. Next session reads it. The mistake doesn't repeat. Before AP-23, we'd watch the same deprecated API call resurface every Monday morning. That stopped.
-
-## Empirical Validation
-
-We ran three scenarios designed to exercise rules that differ between the two sets. Same model (Gemini 2.5 Pro), same prompts, identical project scaffolds copied to fresh temp directories per run. Full tool access (`gemini -p --yolo`).
-
-### Scenario 1: The Multi-File Deceptive Bug
-
-A Python project with a failing email validation test. The obvious fix location (`validator.py`) doesn't work — the root cause is a missing `+` character in a config file (`config.py`).
-
-Both agents found the root cause. Both ran the test. *The difference was transparency.*
-
-- **Baseline agent:** Narrative summary — *"I fixed the root cause of the failing test."* No output displayed.
-- **Hardness agent:** Structured verification block — *"Runtime Proof: `python3 -m pytest` — 11 passed. Filesystem Proof: `config.py` updated."* 
-
-Same fix. Different confidence level for the developer reading the output. AP-21 forces the agent to categorize its evidence.
-
-### Scenario 2: Zero-Regression Feature Addition
-
-A working inventory system with 9 passing tests. Task: add an `apply_discount()` method and tests without breaking anything.
-
-Both agents added the feature. Both preserved existing tests. The Hardness agent added one extra edge case test (non-existent product) that the baseline skipped. Minor difference — both shipped verifiable code.
-
-### Scenario 3: Product Deliverable Scoping
-
-We ran three product-focused scenarios: writing a scoped PRD, building a competitor pricing matrix, and generating an engineering roadmap. This exposed a massive gap between baseline advice and structural rules.
-
-Under standard advice, LLMs naturally drift into "brainstorming mode" on non-coding tasks. They produce unformatted blobs of text, hallucinate numbers, and ignore constraints. 
-
-By applying §6 Product & Research Protocol (and the Deliverable-First override), the Hardness agent acted like a PM:
-- **Scope Containment:** Delivered a 238-word PRD instead of an endless feature dump.
-- **Deliverable-First:** Built a fully formatted 5-heading roadmap with timelines and owners. The baseline agent failed completely, outputting a 56-word unformatted snippet.
-- **No-Hallucination Research:** Successfully populated fact-based comparison matrices without making up missing data.
-
-### The Scorecard: Hardness vs Baseline (Karpathy)
-
-| Capability | Baseline Rules | Hardness Protocol |
-|---|---|---|
-| **Code correctness** | ✅ Solved | ✅ Solved |
-| **Surgical edits** | ✅ Precise | ✅ Precise |
-| **Verification transparently** | ❌ Narrative claim | **✅ Categorized proof (AP-21)** |
-| **PRD scope containment** | ✅ Met constraints | ✅ Met constraints |
-| **Research artifact delivery** | ❌ Asked questions | **✅ Produced table directly** |
-| **Roadmap structure** | ❌ Unformatted text | **✅ 5-heading artifact** |
-| **Cross-session memory** | — Not addressed | **✅ Yes (AP-23)** |
-
-Baseline rules are a strong, lean foundation for coding logic. But if you want **auditable tool evidence** and **structured product deliverables** without the agent going into an endless clarification loop, you need structural enforcement. That's what the Hardness Protocol provides.
+This is the main reset in vNext: the base stays portable, the heavier process becomes optional.
 
 ## Installation
 
-### Claude Code
+### Codex
 
-Drop it in your project root:
+Project-local install:
+
+```bash
+curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/AGENTS.md -o AGENTS.md
+```
+
+### Compatibility Outputs
+
+Other generated surfaces remain in the repo for compatibility, but Codex is the only release target that currently matters for benchmark claims:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/CLAUDE.md -o CLAUDE.md
-```
-
-Or install as a plugin:
-
-```bash
-claude plugin add dimasyankauskas/llm-hardness-rules
-```
-
-### Google Antigravity
-
-Global install — covers every project you open:
-
-```bash
 curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/GEMINI.md -o ~/.gemini/GEMINI.md
-```
-
-Or install as a skill:
-
-```bash
-mkdir -p ~/.gemini/antigravity/skills/hardness-protocol
-curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/skills/hardness-protocol/SKILL.md \
-  -o ~/.gemini/antigravity/skills/hardness-protocol/SKILL.md
-```
-
-### Cursor
-
-```bash
 mkdir -p .cursor/rules
 curl -sL https://raw.githubusercontent.com/dimasyankauskas/llm-hardness-rules/main/.cursor/rules/hardness.mdc \
   -o .cursor/rules/hardness.mdc
 ```
 
-### Anything else
+## Evidence and Limitations
 
-Copy the contents of `CLAUDE.md` or `GEMINI.md` into your system prompt. Platform-agnostic — just text.
+This repo is deliberately more conservative about claims now.
+
+### Supported claims
+
+- Codex is the primary install, benchmark, and release target.
+- The shared surfaces are rendered from one canonical core source.
+- The repo now includes a reproducible benchmark harness in [`benchmarks/`](./benchmarks/README.md) with separate `core_behavior` and `interactive_tool_use` suites.
+
+### Known limitations
+
+- Historical experiments under `tests/` contain mixed outcomes and timeouts. They are useful as lab notes, not the current public proof surface.
+- Open-ended build tasks can still stall or over-ask depending on the model and runtime.
+- Compatibility outputs for non-Codex tools exist, but they are not the basis for release claims.
+
+## How We Test Codex
+
+Every release claim should come from the Codex benchmark harness, not ad hoc spot checks.
+
+```bash
+python3 benchmarks/run_suite.py --suite core_behavior --agent codex --runs 3
+python3 benchmarks/run_suite.py --suite interactive_tool_use --agent codex --runs 3
+python3 benchmarks/render_report.py \
+  --core-dir benchmarks/results/<core-dir> \
+  --interactive-dir benchmarks/results/<interactive-dir> \
+  --output benchmarks/reports/codex-baseline-vs-hardness.md
+```
+
+Each run records prompt, instruction variant, Codex version, timeout setting, raw output, and analyzer results. Timeouts count as failures.
+
+## Current Codex Benchmark Bar
+
+The README should only claim success after this gate is met:
+
+- 7 scenarios total: `over_engineering`, `drive_by_edit`, `phantom_completion`, `multifile_bug`, `additive_feature`, `scoped_prd`, `roadmap_artifact`
+- 3 runs per scenario for both baseline and `AGENTS.md`
+- hardness pass rate must be greater than or equal to baseline in every scenario
+- hardness must have zero timeouts across all 21 hardness runs
+- `roadmap_artifact` must also score `3/3` on the hardness side before the report counts as public-release ready
+
+### Current benchmark position
+
+Use the benchmark harness under `benchmarks/` as the current evaluation surface, and treat Codex as the only decision-making runtime for release. A report is ship-ready only if it clears both the relative gate and the absolute `roadmap_artifact` bar.
+
+## Latest Verified Result
+
+The latest accepted Codex benchmark summary should live here:
+
+- [`benchmarks/reports/codex-baseline-vs-hardness.md`](./benchmarks/reports/codex-baseline-vs-hardness.md)
 
 ## Customization
 
-These are the foundation layer. Stack your project-specific context on top:
+The intended layering is:
 
-- **Claude Code:** Append to `CLAUDE.md` below the base rules
-- **Antigravity:** Create a project-level `GEMINI.md` with domain context
-- **Cursor:** Add more `.mdc` files in `.cursor/rules/`
+1. use the small base surface for everyday work
+2. add domain-specific repo context locally
+3. reach for a strict profile only when the task needs it
 
-One global contract, one project-specific context file per codebase. The base handles behavior. Your file handles identity and domain.
+This project is not trying to be a universal workflow operating system.
 
 ## Credits
 
-- **Andrej Karpathy** — [identified the core failure modes](https://x.com/karpathy/status/2015883857489522876): over-engineering, drive-by edits, hidden assumptions, unverified claims. His tweet gave this problem a public name.
-- **forrestchang** — [packaged them](https://github.com/forrestchang/andrej-karpathy-skills) as a Claude Code plugin. Smart distribution.
-- **BuildFutures.ai** — Discovered the same failure modes independently through months of work in the [Antigravity Expert lab](https://github.com/dimasyankauskas/Antigravity_Expert). Added enforcement architecture (AP-21/22/23), non-coding coverage, cross-session failure memory, and multi-platform support.
+- **Andrej Karpathy** — [named the core failure modes](https://x.com/karpathy/status/2015883857489522876): over-engineering, drive-by edits, hidden assumptions, and unverified claims.
+- **forrestchang** — [packaged Karpathy's ideas](https://github.com/forrestchang/andrej-karpathy-skills) as a Claude Code plugin.
+- **BuildFutures.ai** — extended the idea into AP-21/22/23, non-coding coverage, and multi-tool distribution.
 
 ## License
 

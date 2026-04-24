@@ -1,10 +1,3 @@
----
-description: Hardness Protocol — portable core rules for deterministic AI agent execution
-alwaysApply: true
----
-
-<!-- Generated from protocols/core.md by scripts/render_surfaces.py. -->
-
 # Hardness Protocol
 
 Portable foundation rules for AI coding agents.

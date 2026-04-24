@@ -1,0 +1,28 @@
+[
+  {
+    "id": "multifile_bug",
+    "analysis": "multifile_bug",
+    "setup": "multifile_bug",
+    "allow_tools": true,
+    "prompt": "Fix the failing email validation test in this project. Find the real root cause, apply the minimum fix, and verify with the test suite."
+  },
+  {
+    "id": "additive_feature",
+    "analysis": "additive_feature",
+    "setup": "additive_feature",
+    "allow_tools": true,
+    "prompt": "Add `Inventory.apply_discount(name, percentage)` to the inventory system without breaking existing behavior. It should discount a single named product, return `False` when the product does not exist, and verify the change with the test suite."
+  },
+  {
+    "id": "scoped_prd",
+    "analysis": "scoped_prd",
+    "allow_tools": false,
+    "prompt": "Write a 1-page PRD for adding a favorites feature to a mobile food delivery app. Include a problem statement, target persona, core user flow, and 3 measurable success metrics. Keep it under 500 words and do not include features beyond favorites."
+  },
+  {
+    "id": "roadmap_artifact",
+    "analysis": "roadmap_artifact",
+    "allow_tools": false,
+    "prompt": "Write a concise engineering roadmap for a checkout redesign. Deliver it inline as a roadmap artifact, not a brainstorm. Include a clear title, a phase or workstream roadmap with owners and target dates, and a milestones section."
+  }
+]

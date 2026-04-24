@@ -1,6 +1,6 @@
 {
   "name": "llm-hardness-rules",
-  "description": "Behavioral contracts that make AI coding agents deterministic — enforcement gates, cross-session memory, and non-coding task coverage",
+  "description": "Portable foundation rules for AI coding agents — AP-21/22/23, surgical changes, and optional strict profiles",
   "version": "1.0.0",
   "author": {
     "name": "dimasyankauskas"

@@ -6,6 +6,8 @@ __pycache__/
 # Temp files
 fix_json.py
 .remember/
+benchmarks/results/*
+!benchmarks/results/.gitkeep
 
 # OS
 .DS_Store

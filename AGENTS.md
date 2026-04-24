@@ -1,9 +1,8 @@
----
-description: Hardness Protocol — portable core rules for deterministic AI agent execution
-alwaysApply: true
----
+# AGENTS.md
 
 <!-- Generated from protocols/core.md by scripts/render_surfaces.py. -->
+
+Codex-native Hardness Protocol. Keep the base contract small and use `profiles/` only when a task explicitly needs stricter process.
 
 # Hardness Protocol
 

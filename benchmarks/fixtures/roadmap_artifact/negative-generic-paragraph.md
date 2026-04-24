@@ -1,0 +1,1 @@
+The checkout should be redesigned soon because the current experience may have friction and the team should work together to improve it over time. Engineering, product, and design can collaborate on a better flow and aim for a launch later in 2026 once the work is complete.

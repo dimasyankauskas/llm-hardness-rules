@@ -1,6 +1,12 @@
 # Examples
 
-Real-world examples demonstrating how the Hardness Rules change agent behavior. Each example shows the common failure and the correct approach.
+Illustrative examples for the core protocol and optional profiles. These are behavior sketches, not benchmark claims.
+
+When a stricter workflow matters, pair the core with:
+
+- `profiles/bugfix.md`
+- `profiles/research.md`
+- `profiles/high-assurance.md`
 
 ---
 
@@ -172,7 +178,7 @@ Agent produces:
 - No web search performed
 - Board gets wrong numbers
 
-#### ✅ With Hardness Rules
+#### ✅ With Hardness + Research Profile
 
 **§2 Determinism over Generation fires:** "If it can be verified by a tool — verify it." Agent performs live web searches instead of relying on training data.
 
@@ -199,7 +205,7 @@ Agent rewrites the entire API docs file:
 - Reorders sections alphabetically
 - Somewhere in there, adds the `/v2/orders` docs
 
-#### ✅ With Hardness Rules
+#### ✅ With Hardness + High-Assurance Profile
 
 **§2 Surgical Changes fires:** "When editing documents, preserve existing tone, structure, and formatting."
 
